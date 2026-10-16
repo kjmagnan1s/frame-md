@@ -20,7 +20,7 @@ to the HyperFrames / HeyGen team.**
 ## What it does
 
 Runs HyperFrames' four-step overlay: get the brand atoms (a `design.md`, a
-`website-to-video` capture, or raw brand inputs) → pick the closest preset →
+`npx hyperframes capture` of a live site, or raw brand inputs) → pick the closest preset →
 overlay the atoms verbatim onto that skeleton → adapt the treatments and build
 the entity allowlist → emit a lowercase `frame.md`. See [`SKILL.md`](SKILL.md).
 

@@ -1,6 +1,6 @@
 ---
 name: frame-md
-description: Build a reusable, video-native frame.md for a brand using HyperFrames' open-source frame.md system. Use when the user wants a frame.md, asks to turn a website / design.md / brand kit into a HyperFrames design system, says "make a frame.md for <brand>", "refresh the frame.md", "video design system for X", or is about to make HyperFrames videos for a brand and has no frame.md yet. A frame.md is a per-brand artifact made once and reused across many videos, so reach for this whenever a brand's video look needs to be defined or updated, even if the user doesn't say "frame.md" by name. Produces the design source; the superframes skill consumes it and hyperframes authors the composition. Not for authoring a composition (hyperframes) or making a whole video (superframes / website-to-video).
+description: Builds a reusable, video-native frame.md for a brand using HyperFrames' open-source frame.md system. Use when the user wants a frame.md, asks to turn a website / design.md / brand kit into a HyperFrames design system, says "make a frame.md for <brand>", "refresh the frame.md", "video design system for X", or is about to make HyperFrames videos for a brand and has no frame.md yet. A frame.md is a per-brand artifact made once and reused across many videos, so reach for this whenever a brand's video look needs to be defined or updated, even if the user doesn't say "frame.md" by name. Produces the design source; the superframes skill consumes it and hyperframes authors the composition. Not for authoring a composition (hyperframes) or making a whole video (superframes / product-launch-video).
 ---
 
 # frame-md
@@ -19,7 +19,7 @@ reused across every video. The canonical format and resolution rules are in
 [references/design-spec.md](references/design-spec.md) (HyperFrames' own spec).
 
 This skill does **not** author compositions (`hyperframes`) or build a whole
-video (`superframes` / `website-to-video`). It produces the design source.
+video (`superframes` / `product-launch-video`). It produces the design source.
 
 ## The procedure
 
@@ -29,12 +29,17 @@ HyperFrames' generator is a documented four-step overlay. Run it locally:
 Resolve a source, in this order:
 - **A `design.md` / `DESIGN.md`** in the project → read it; its tokens are the
   atoms.
-- **A live website/URL** → capture tokens with the `website-to-video` skill (it
-  emits `tokens.json` + `design-styles.json`). Do not rebuild a token extractor.
+- **A live website/URL** → `npx hyperframes capture "<URL>" -o ./capture --json`;
+  read `capture/extracted/tokens.json`. Do not rebuild a token extractor.
 - **Raw brand inputs** (a few hexes, font names, a logo) → ask for the minimum:
   primary + accent colors, display + body fonts, light/dark ground.
 
 ### 2. Pick the closest preset
+
+> **Owner layer first.** If `local/OWNER.md` exists in this skill folder, read it
+> before picking. Its byline rules and private presets in `local/frame-presets/`
+> override the picker below. `local/` is gitignored and never published.
+
 Each preset in [references/frame-presets/](references/frame-presets/) is a
 complete `FRAME.md` skeleton: the composition grammar, the cqw type ramps, the
 six treatments, the self-audit, already written. Pick the one whose register
@@ -48,7 +53,7 @@ matches the brand (the full "pick when" table is in `design-spec.md`):
 - **`capsule`** — playful editorial; soft, friendly, approachable. (Consumer,
   food, lifestyle, community brands.)
 
-Four are vendored here; HyperFrames ships 13 (see `NOTICE.md`). If none fits,
+All four are vendored from HyperFrames, which ships 13 (see `NOTICE.md`). If none fits,
 pull another preset from the upstream repo / `hyperframes-creative` skill, or
 start from the closest and re-skin.
 
@@ -93,7 +98,11 @@ These come straight from the presets / `design-spec.md`; keep them:
 ## References
 - [references/design-spec.md](references/design-spec.md) — HyperFrames' canonical
   frame.md format + resolution rules + the full preset "pick when" table.
-- [references/frame-presets/](references/frame-presets/) — four full preset
-  skeletons (blue-professional, claude, coral, capsule).
+- Preset skeletons, one `FRAME.md` each:
+  [blue-professional](references/frame-presets/blue-professional/FRAME.md),
+  [claude](references/frame-presets/claude/FRAME.md),
+  [coral](references/frame-presets/coral/FRAME.md),
+  [capsule](references/frame-presets/capsule/FRAME.md). Each runs 200-320 lines;
+  read only the one you picked.
 - [references/NOTICE.md](references/NOTICE.md) — attribution; how to pull the
   other 9 presets.
